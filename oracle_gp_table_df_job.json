@@ -1,0 +1,79 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                 "channel": 3
+            },
+            "errorLimit": {
+                "record": 0,
+                "percentage": 0
+            }
+        },
+        "content": [
+            {
+               "reader": {
+                    "name": "oraclereader",
+                    "parameter": {
+                        "username": "test",
+                        "password": "test",
+                        "connection": [
+                            { 
+								"querySql": [  "select SYSdate as etl_create_time,SYSdate as etl_update_time, 'zbh' as tenant_id,${src_table_columns} from dbo.${src_table_name} ${relation} where ${condition}" ],
+                                "jdbcUrl": [ "jdbc:oracle:thin:@10.0.1.106:1521:erp"]
+                            },
+							{ 
+								"querySql": [  "select SYSdate as etl_create_time,SYSdate as etl_update_time, 'fz' as tenant_id, ${src_table_columns_fz} from fz.${src_table_name} ${relation} where ${condition}" ],
+                                "jdbcUrl": [ "jdbc:oracle:thin:@10.0.1.106:1521:erp"]
+                            },
+							{ 
+								"querySql": [  "select SYSdate as etl_create_time,SYSdate as etl_update_time, 'jcg' as tenant_id, ${src_table_columns_jcg} from jcg.${src_table_name} ${relation} where ${condition}" ],
+                                "jdbcUrl": [ "jdbc:oracle:thin:@10.0.1.106:1521:erp"]
+                            },
+							{ 
+								"querySql": [  "select SYSdate as etl_create_time,SYSdate as etl_update_time, 'ks' as tenant_id, ${src_table_columns_ks} from ks.${src_table_name} ${relation} where ${condition}" ],
+                                "jdbcUrl": [ "jdbc:oracle:thin:@10.0.1.106:1521:erp"]
+                            },
+							{ 
+								"querySql": [  "select SYSdate as etl_create_time,SYSdate as etl_update_time, 'qzdf' as tenant_id, ${src_table_columns_qzdf} from qzdf.${src_table_name} ${relation} where ${condition}" ],
+                                "jdbcUrl": [ "jdbc:oracle:thin:@10.0.1.106:1521:erp"]
+                            },
+							{ 
+								"querySql": [  "select SYSdate as etl_create_time,SYSdate as etl_update_time, 'sdsht' as tenant_id,${src_table_columns_sdsht} from sdsht.${src_table_name} ${relation} where ${condition}" ],
+                                "jdbcUrl": [ "jdbc:oracle:thin:@10.0.1.106:1521:erp"]
+                            },
+							{ 
+								"querySql": [  "select SYSdate as etl_create_time,SYSdate as etl_update_time, 'wfjx' as tenant_id,${src_table_columns_wfjx} from wfjx.${src_table_name} ${relation} where ${condition}" ],
+                                "jdbcUrl": [ "jdbc:oracle:thin:@10.0.1.106:1521:erp"]
+                            },
+							{ 
+								"querySql": [  "select SYSdate as etl_create_time,SYSdate as etl_update_time, 'wst' as tenant_id,${src_table_columns_wst} from wst.${src_table_name} ${relation} where ${condition}" ],
+                                "jdbcUrl": [ "jdbc:oracle:thin:@10.0.1.106:1521:erp"]
+                            },
+							{ 
+								"querySql": [  "select SYSdate as etl_create_time,SYSdate as etl_update_time, 'std' as tenant_id, ${src_table_columns_std} from std.${src_table_name} ${relation} where ${condition}" ],
+                                "jdbcUrl": [ "jdbc:oracle:thin:@10.0.1.106:1521:erp"]
+                            },
+                        ]
+                    }
+                },				
+				"writer": {
+                    "name": "gpdbwriter",
+                    "parameter": {
+                        "encoding": "UTF-8",
+                        "username": "test",
+                        "password": "test",
+                        "column": ["${des_table_columns}"],
+                    "connection": [
+                        {
+                            "jdbcUrl": "jdbc:postgresql://192.168.1.5:9000/dw",
+                            "table": ["${des_table_name}"]
+                        }
+                    ],
+                    "preSql": ["TRUNCATE TABLE ${des_table_name}"]
+                    }
+                }
+            }
+        ]
+    }
+}
+
